@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:time_tracker/screens/Menu/TaskMenu.dart';
 import 'package:time_tracker/screens/Menu/projectMenu.dart';
 import 'package:time_tracker/screens/TabBar/AllEnt.dart';
+import 'package:time_tracker/screens/TabBar/GroupEnt.dart';
 
 import '../dialogs/MenuTile.dart';
 
@@ -24,11 +25,14 @@ class _HomemainState extends State<Homemain> {
           title: Text('Time Traking'),
           centerTitle: true,
           backgroundColor: Colors.red[200],
-          bottom:TabBar(
+          bottom:const TabBar(
             tabs: [
-              Tab(text: 'Tab 1'),
-              Tab(text: 'Tab 2'),
+              Tab(text: 'All Entries'),
+              Tab(text: 'Grouped by Projects'),
             ],
+            indicatorColor: Colors.black,
+            labelColor: Colors.black,
+            indicatorSize: TabBarIndicatorSize.tab,
           ),
         ),
         drawer: Drawer(
@@ -61,7 +65,7 @@ class _HomemainState extends State<Homemain> {
         body: TabBarView(
           children: [
             Allent(),
-            Center(child: Text('Content of Tab 2')),
+            Groupent(),
           ],
         ),
       ),

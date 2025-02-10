@@ -2,6 +2,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/project_task_providr.dart';
@@ -16,18 +17,41 @@ class Allent extends StatelessWidget {
       body:
       Consumer<TimeEntryProvider>(
         builder: (context, provider, child) {
-          return ListView.builder(
-            itemCount: provider.entries.length,
-            itemBuilder: (context, index) {
-              final entry = provider.entries[index];
-              return ListTile(
-                title: Text('${entry.projectId} - ${entry.totalTime} hours'),
-                subtitle: Text('${entry.date.toString()} - Notes: ${entry.notes}'),
-                onTap: () {
-                  // This could open a detailed view or edit screen
-                },
-              );
-            },
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView.builder(
+              itemCount: provider.entries.length,
+              itemBuilder: (context, index) {
+                final entry = provider.entries[index];
+                return Card(
+                  elevation: 4, // Adds shadow
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                    title: Text('${entry.projectId} - ${entry.taskId}',
+                      style: TextStyle(color: Colors.red[300],fontSize: 18,fontWeight: FontWeight.w600),),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+
+                        Text('Total Time: ${entry.totalTime} hours',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15),),
+                        Text('Date: ${DateFormat('MMM dd,yyyy').format(entry.date)}',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color: Colors.grey[700]),),
+                        Text('Notes: ${entry.notes}',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15),),
+
+                      ],
+                    ),
+                    trailing: IconButton(
+                      onPressed: (){
+                        Provider.of<TimeEntryProvider>(context, listen: false)
+                            .deleteTimeEntry(entry.id);
+                      },
+                      icon: Icon(Icons.delete,color: Colors.red,),),
+                  ),
+                );
+              },
+            ),
           );
         },
       ),

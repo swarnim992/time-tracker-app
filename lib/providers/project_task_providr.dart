@@ -23,6 +23,9 @@ class ProjectEntryProvider with ChangeNotifier {
 
   List<Project> get entries => _entries;
 
+  List<String> projectNames() {
+    return _entries.map((entry) => entry.name).toList();
+  }
   void addProjectEntry(Project entry) {
     _entries.add(entry);
     notifyListeners();
@@ -38,6 +41,9 @@ class TaskEntryProvider with ChangeNotifier {
 
   List<Task> get entries => _entries;
 
+  List<String> taskNames() {
+    return _entries.map((entry) => entry.name).toList();
+  }
   void addTaskEntry(Task entry) {
     _entries.add(entry);
     notifyListeners();
